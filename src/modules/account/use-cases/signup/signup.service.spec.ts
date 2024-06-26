@@ -6,15 +6,15 @@ import { AccountDaoDto } from '../../persistence/dao/account-dao.interface';
 import { AccountInMemoryAdapterDAO } from '../../persistence/dao/adapters/in-memory/account-in-memory.dao';
 import { AccountInMemoryAdapterRepository } from '../../persistence/repositories/adapters/in-memory/account-in-memory.repository';
 import { SignupInputDto } from './dtos/signup.dto';
-import { SignupService } from './signup.service';
+import { SignupUseCase } from './signup.service';
 
 describe('Signup use case', () => {
-  let sut: SignupService;
+  let sut: SignupUseCase;
   let mockRepository: jest.Mocked<AccountInMemoryAdapterRepository>;
   let mockDao: jest.Mocked<AccountInMemoryAdapterDAO>;
 
   beforeEach(() => {
-    const { unit, unitRef } = TestBed.create(SignupService).compile();
+    const { unit, unitRef } = TestBed.create(SignupUseCase).compile();
 
     sut = unit;
     mockRepository = unitRef.get(TOKENS.IAccountRepository);

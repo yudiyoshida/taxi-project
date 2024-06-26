@@ -6,7 +6,7 @@ import { IAccountRepository } from '../../persistence/repositories/account-repos
 import { SignupInputDto, SignupOutputDto } from './dtos/signup.dto';
 
 @Injectable()
-export class SignupService {
+export class SignupUseCase {
   constructor(
     @Inject(TOKENS.IAccountRepository) private accountRepository: IAccountRepository,
     @Inject(TOKENS.IAccountDAO) private accountDao: IAccountDAO,
