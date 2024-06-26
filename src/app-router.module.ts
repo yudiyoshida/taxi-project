@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
-import { AccountModule } from './modules/account/account.module';
 import { PrismaModule } from './infra/database/prisma/prisma.module';
+import { AccountModule } from './modules/account/account.module';
 
 @Module({
   imports: [
