@@ -4,6 +4,10 @@ import { AccountDaoDto, IAccountDAO } from '../../account-dao.interface';
 
 @Injectable()
 export class AccountInMemoryAdapterDAO implements IAccountDAO {
+  public async findById(id: string): Promise<AccountDaoDto | null> {
+    return null;
+  }
+
   public async findByEmail(email: string): Promise<AccountDaoDto|null> {
     return null;
   }
