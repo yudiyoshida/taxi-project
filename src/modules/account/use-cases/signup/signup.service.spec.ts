@@ -2,16 +2,15 @@ import { TestBed } from '@automock/jest';
 import { createMock } from '@golevelup/ts-jest';
 import { ConflictException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
-import { AccountDaoDto } from '../../persistence/dao/account-dao.interface';
-import { AccountInMemoryAdapterDAO } from '../../persistence/dao/adapters/in-memory/account-in-memory.dao';
-import { AccountInMemoryAdapterRepository } from '../../persistence/repositories/adapters/in-memory/account-in-memory.repository';
+import { AccountDaoDto, IAccountDAO } from '../../persistence/dao/account-dao.interface';
+import { IAccountRepository } from '../../persistence/repositories/account-repository.interface';
 import { SignupInputDto } from './dtos/signup.dto';
 import { SignupUseCase } from './signup.service';
 
 describe('Signup use case', () => {
   let sut: SignupUseCase;
-  let mockRepository: jest.Mocked<AccountInMemoryAdapterRepository>;
-  let mockDao: jest.Mocked<AccountInMemoryAdapterDAO>;
+  let mockRepository: jest.Mocked<IAccountRepository>;
+  let mockDao: jest.Mocked<IAccountDAO>;
 
   beforeEach(() => {
     const { unit, unitRef } = TestBed.create(SignupUseCase).compile();

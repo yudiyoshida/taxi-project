@@ -1,9 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 
 export class Email {
-  private _value: string;
+  private readonly _value: string;
 
-  constructor(email: string) {
+  constructor(rawEmail: string) {
+    const email = this.sanitize(rawEmail);
+
     if (!this.validate(email)) {
       throw new BadRequestException('Email inválido');
     }
@@ -13,6 +15,10 @@ export class Email {
   private validate(email: string): boolean {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
+  }
+
+  private sanitize(email: string): string {
+    return email?.trim().toLowerCase();
   }
 
   public get value(): string {

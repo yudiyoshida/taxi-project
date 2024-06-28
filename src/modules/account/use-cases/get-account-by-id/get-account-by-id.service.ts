@@ -1,5 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
+import { Errors } from 'src/shared/errors/error-message';
 import { AccountDaoDto, IAccountDAO } from '../../persistence/dao/account-dao.interface';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class GetAccountByIdUseCase {
     const account = await this.accountDao.findById(id);
 
     if (!account) {
-      throw new NotFoundException('Conta não encontrada na base de dados.');
+      throw new NotFoundException(Errors.ACCOUNT_NOT_FOUND);
     }
     return account;
   }

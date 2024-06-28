@@ -2,7 +2,7 @@ import * as crypto from 'crypto';
 import { CPF } from 'src/modules/account/domain/value-objects/cpf/cpf.vo';
 import { Email } from 'src/modules/account/domain/value-objects/email/email.vo';
 
-export type AccountProps = {
+type AccountProps = {
   id: string;
   isPassenger: boolean;
   isDriver: boolean;
@@ -10,11 +10,10 @@ export type AccountProps = {
   cpf: CPF;
   email: Email;
   password: string;
-
   carPlate: string | null;
 }
 
-export type AccountCreationProps = {
+type AccountPropsCreation = {
   isPassenger: boolean;
   isDriver: boolean;
   name: string;
@@ -27,7 +26,7 @@ export type AccountCreationProps = {
 export class Account {
   private _props: AccountProps;
 
-  private constructor(props: AccountCreationProps, uuid?: string) {
+  private constructor(props: AccountPropsCreation, uuid?: string) {
     const id = uuid ?? crypto.randomUUID();
     const email = new Email(props.email);
     const cpf = new CPF(props.cpf);
@@ -35,8 +34,18 @@ export class Account {
     this._props = { ...props, id, email, cpf };
   }
 
-  public static create(props: AccountCreationProps): Account {
+  public static create(props: AccountPropsCreation): Account {
     return new Account({ ...props });
+  }
+
+  public static load(props: AccountPropsCreation, id: string): Account {
+    return new Account(props, id);
+  }
+
+  public isPassengerRole(): boolean {
+    // apesar de ser um método simples, ele é usado para um design flexível,
+    // uma vez que a regra de negócio sobre verificar se a conta é do tipo passageiro pode mudar futuramente.
+    return this._props.isPassenger;
   }
 
   public get id(): string {

@@ -12,6 +12,7 @@ describe('SignupController', () => {
   let getAccountByIdUseCase: GetAccountByIdUseCase;
 
   beforeEach(async() => {
+    // TODO: deve utilizar banco de dados de teste.
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         AccountModule,

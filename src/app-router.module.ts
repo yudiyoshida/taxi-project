@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { AccountModule } from './modules/account/account.module';
+import { RideModule } from './modules/ride/ride.module';
 
 @Module({
   imports: [
@@ -8,6 +9,10 @@ import { AccountModule } from './modules/account/account.module';
       {
         path: 'accounts',
         module: AccountModule,
+      },
+      {
+        path: 'rides',
+        module: RideModule,
       },
     ]),
   ],

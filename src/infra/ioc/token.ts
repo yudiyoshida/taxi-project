@@ -1,5 +1,7 @@
 export const TOKENS = {
+  IAccountDAO: Symbol.for('IAccountDAO'),
   IAccountRepository: Symbol.for('IAccountRepository'),
 
-  IAccountDAO: Symbol.for('IAccountDAO'),
+  IRideDAO: Symbol.for('IRideDAO'),
+  IRideRepository: Symbol.for('IRideRepository'),
 };
