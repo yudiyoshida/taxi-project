@@ -1,6 +1,7 @@
 import * as crypto from 'crypto';
 import { CPF } from 'src/modules/account/domain/value-objects/cpf/cpf.vo';
 import { Email } from 'src/modules/account/domain/value-objects/email/email.vo';
+import { AccountPropsCreation } from '../factories/account.factory';
 
 type AccountProps = {
   id: string;
@@ -13,33 +14,15 @@ type AccountProps = {
   carPlate: string | null;
 }
 
-type AccountPropsCreation = {
-  isPassenger: boolean;
-  isDriver: boolean;
-  name: string;
-  cpf: string;
-  email: string;
-  password: string;
-  carPlate: string | null;
-}
-
 export class Account {
   private _props: AccountProps;
 
-  private constructor(props: AccountPropsCreation, uuid?: string) {
+  constructor(props: AccountPropsCreation, uuid?: string) {
     const id = uuid ?? crypto.randomUUID();
     const email = new Email(props.email);
     const cpf = new CPF(props.cpf);
 
     this._props = { ...props, id, email, cpf };
-  }
-
-  public static create(props: AccountPropsCreation): Account {
-    return new Account({ ...props });
-  }
-
-  public static load(props: AccountPropsCreation, id: string): Account {
-    return new Account(props, id);
   }
 
   public isPassengerRole(): boolean {

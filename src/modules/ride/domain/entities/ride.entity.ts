@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import { RidePropsCreation } from '../factories/ride.factory';
 import { Coordinate } from '../value-objects/coordinate/coordinate.vo';
 
 type RideProps = {
@@ -12,52 +13,17 @@ type RideProps = {
   to: Coordinate;
 }
 
-type RidePropsCreation = {
-  passengerId: string;
-  driverId: string | null;
-  date: Date;
-  fare: number | null;
-  status: RideStatus;
-  fromLat: number;
-  fromLng: number;
-  toLat: number;
-  toLng: number;
-}
-
 export type RideStatus = 'requested' | 'accepted' | 'inProgress' | 'finished' | 'canceled';
 
 export class Ride {
   private _props: RideProps;
 
-  private constructor(props: RidePropsCreation, uuid?: string) {
+  constructor(props: RidePropsCreation, uuid?: string) {
     const id = uuid ?? crypto.randomUUID();
     const from = new Coordinate(props.fromLat, props.fromLng);
     const to = new Coordinate(props.toLat, props.toLng);
 
-    this._props = {
-      id,
-      passengerId: props.passengerId,
-      driverId: props.driverId,
-      date: props.date,
-      fare: props.fare,
-      status: props.status,
-      from,
-      to,
-    };
-  }
-
-  public static create(passengerId: string, fromLat: number, fromLng: number, toLat: number, toLng: number): Ride {
-    return new Ride({
-      passengerId,
-      fromLat,
-      fromLng,
-      toLat,
-      toLng,
-      driverId: null,
-      fare: null,
-      status: 'requested',
-      date: new Date(),
-    });
+    this._props = { ...props, id, from, to };
   }
 
   public get id(): string {

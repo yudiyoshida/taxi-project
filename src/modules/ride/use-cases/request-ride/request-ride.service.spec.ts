@@ -3,6 +3,7 @@ import { createMock } from '@golevelup/ts-jest';
 import { ConflictException, UnprocessableEntityException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
 import { Account } from 'src/modules/account/domain/entities/account.entity';
+import { AccountFactory } from 'src/modules/account/domain/factories/account.factory';
 import { IAccountRepository } from 'src/modules/account/persistence/repositories/account-repository.interface';
 import { Errors } from 'src/shared/errors/error-message';
 import { IRideDAO, RideDaoDto } from '../../persistence/dao/ride-dao.interface';
@@ -30,7 +31,7 @@ describe('RequestRideUseCase', () => {
       email: 'jhondoe@email.com',
       cpf: '12345678909',
     });
-    const account = Account.create(accountData);
+    const account = AccountFactory.create(accountData);
     mockAccountRepository.findById.mockResolvedValue(account);
 
     // Act & Assert
@@ -49,7 +50,7 @@ describe('RequestRideUseCase', () => {
       email: 'jhondoe@email.com',
       cpf: '12345678909',
     });
-    const account = Account.create(accountData);
+    const account = AccountFactory.create(accountData);
     mockAccountRepository.findById.mockResolvedValue(account);
 
     const rides = [createMock<RideDaoDto>()];

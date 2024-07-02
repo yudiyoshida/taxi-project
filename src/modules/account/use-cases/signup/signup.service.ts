@@ -1,6 +1,6 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
-import { Account } from '../../domain/entities/account.entity';
+import { AccountFactory } from '../../domain/factories/account.factory';
 import { IAccountDAO } from '../../persistence/dao/account-dao.interface';
 import { IAccountRepository } from '../../persistence/repositories/account-repository.interface';
 import { SignupInputDto, SignupOutputDto } from './dtos/signup.dto';
@@ -18,7 +18,7 @@ export class SignupUseCase {
       throw new ConflictException('O email informado já está sendo utilizado.');
     }
 
-    const account = Account.create(data);
+    const account = AccountFactory.create(data);
     await this.accountRepository.save(account);
 
     return { id: account.id };

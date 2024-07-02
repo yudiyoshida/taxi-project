@@ -1,4 +1,5 @@
-import { Account } from './account.entity';
+import { Account } from '../entities/account.entity';
+import { AccountFactory } from './account.factory';
 
 describe('Create static method', () => {
   it('should create a new instance of the entity', () => {
@@ -14,7 +15,7 @@ describe('Create static method', () => {
     };
 
     // Act
-    const account = Account.create(props);
+    const account = AccountFactory.create(props);
 
     // Assert
     expect(account).toBeInstanceOf(Account);
@@ -24,6 +25,7 @@ describe('Create static method', () => {
     expect(account.name).toBe('John Doe');
     expect(account.cpf).toBe('12345678909');
     expect(account.email).toBe('jhondoe@email.com');
+    expect(account.password).toBe('123456789');
     expect(account.carPlate).toBe(null);
   });
 });
