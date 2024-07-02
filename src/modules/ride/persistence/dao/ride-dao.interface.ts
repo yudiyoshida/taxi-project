@@ -2,6 +2,7 @@ import { RideStatus } from '../../domain/entities/ride.entity';
 
 export interface IRideDAO {
   findBy(fields: RideWhereInput): Promise<RideDaoDto[]>;
+  findById(id: string): Promise<RideDaoDto|null>;
 }
 
 export type RideWhereInput = {
@@ -13,8 +14,6 @@ export type RideWhereInput = {
 
 export type RideDaoDto = {
   id: string;
-  passengerId: string;
-  driverId: string | null;
   date: Date;
   fare: number | null;
   status: string;
@@ -22,4 +21,6 @@ export type RideDaoDto = {
   fromLng: number;
   toLat: number;
   toLng: number;
+  passengerId: string;
+  driverId: string | null;
 }
