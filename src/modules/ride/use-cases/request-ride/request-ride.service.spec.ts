@@ -63,4 +63,25 @@ describe('RequestRideUseCase', () => {
       expect(error.message).toBe(Errors.PASSENGER_ALREADY_HAS_ACTIVE_RIDE);
     });
   });
+
+  it('should return the id of the requested ride', async() => {
+    // Arrange
+    const data = createMock<RequestRideInputDto>();
+    const accountData = createMock<Account>({
+      isPassenger: true,
+      email: 'jhondoe@email.com',
+      cpf: '12345678909',
+    });
+    const account = AccountFactory.create(accountData);
+    mockAccountRepository.findById.mockResolvedValue(account);
+
+    const rides = [];
+    mockRideDao.findBy.mockResolvedValue(rides);
+
+    // Act
+    const result = await sut.execute(data);
+
+    // Assert
+    expect(result).toEqual({ id: expect.any(String) });
+  });
 });

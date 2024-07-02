@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
-import { IRideDAO, RideDaoDto, RideWhereInput } from '../ride-dao.interface';
+import { IRideDAO, RideDaoDto, RideWhereInput } from '../../ride-dao.interface';
 
 @Injectable()
 export class RidePrismaAdapterDAO implements IRideDAO {
