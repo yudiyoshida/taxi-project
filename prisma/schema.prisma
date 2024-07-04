@@ -32,11 +32,19 @@ model Ride {
   driverId    String?
   date        DateTime
   fare        Float?
-  status      String
+  status      RideStatusPrisma
   fromLat     Float
   fromLng     Float
   toLat       Float
   toLng       Float
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+enum RideStatusPrisma {
+  requested
+  accepted
+  inProgress
+  finished
+  canceled
 }

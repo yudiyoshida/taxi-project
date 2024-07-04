@@ -5,10 +5,16 @@ import { TOKENS } from 'src/infra/ioc/token';
 import { Account } from 'src/modules/account/domain/entities/account.entity';
 import { AccountFactory } from 'src/modules/account/domain/factories/account.factory';
 import { IAccountRepository } from 'src/modules/account/persistence/repositories/account-repository.interface';
-import { Errors } from 'src/shared/errors/error-message';
 import { IRideDAO, RideDaoDto } from '../../persistence/dao/ride-dao.interface';
 import { RequestRideInputDto } from './dtos/request-ride.dto';
 import { RequestRideUseCase } from './request-ride.service';
+
+const data = createMock<RequestRideInputDto>();
+const accountData = createMock<Account>({
+  isPassenger: true,
+  email: 'jhondoe@email.com',
+  cpf: '12345678909',
+});
 
 describe('RequestRideUseCase', () => {
   let sut: RequestRideUseCase;
@@ -25,13 +31,7 @@ describe('RequestRideUseCase', () => {
 
   it('should throw an error when passengerId does not belong to a passenger', async() => {
     // Arrange
-    const data = createMock<RequestRideInputDto>();
-    const accountData = createMock<Account>({
-      isPassenger: false,
-      email: 'jhondoe@email.com',
-      cpf: '12345678909',
-    });
-    const account = AccountFactory.create(accountData);
+    const account = AccountFactory.create({ ...accountData, isPassenger: false });
     mockAccountRepository.findById.mockResolvedValue(account);
 
     // Act & Assert
@@ -44,12 +44,6 @@ describe('RequestRideUseCase', () => {
 
   it('should throw an error when the passenger already has an active ride', async() => {
     // Arrange
-    const data = createMock<RequestRideInputDto>();
-    const accountData = createMock<Account>({
-      isPassenger: true,
-      email: 'jhondoe@email.com',
-      cpf: '12345678909',
-    });
     const account = AccountFactory.create(accountData);
     mockAccountRepository.findById.mockResolvedValue(account);
 
@@ -60,18 +54,12 @@ describe('RequestRideUseCase', () => {
     expect.assertions(2);
     return sut.execute(data).catch((error) => {
       expect(error).toBeInstanceOf(ConflictException);
-      expect(error.message).toBe(Errors.PASSENGER_ALREADY_HAS_ACTIVE_RIDE);
+      expect(error.message).toBe('Erro. Passageiro já possui uma corrida em andamento.');
     });
   });
 
   it('should return the id of the requested ride', async() => {
     // Arrange
-    const data = createMock<RequestRideInputDto>();
-    const accountData = createMock<Account>({
-      isPassenger: true,
-      email: 'jhondoe@email.com',
-      cpf: '12345678909',
-    });
     const account = AccountFactory.create(accountData);
     mockAccountRepository.findById.mockResolvedValue(account);
 

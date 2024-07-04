@@ -22,7 +22,7 @@ export class RequestRideUseCase {
     }
 
     const passengerActiveRides = await this.rideDao.findBy({
-      passengerId: data.passengerId,
+      passengerId: account.id,
       status: ['requested', 'accepted', 'inProgress'],
     });
     if (passengerActiveRides.length > 0) {

@@ -26,4 +26,8 @@ export class RideFactory {
       date: new Date(),
     });
   }
+
+  public static load(props: RidePropsCreation, id: string): Ride {
+    return new Ride(props, id);
+  }
 }

@@ -26,22 +26,31 @@ export class Ride {
     this._props = { ...props, id, from, to };
   }
 
-  public get id(): string {
+  public cannotBeAccepted(): boolean {
+    return this._props.status !== 'requested';
+  }
+
+  public accept(driverId: string) {
+    this._props.driverId = driverId;
+    this._props.status = 'accepted';
+  }
+
+  public get id() {
     return this._props.id;
   }
-  public get passengerId(): string {
+  public get passengerId() {
     return this._props.passengerId;
   }
-  public get driverId(): string | null {
+  public get driverId() {
     return this._props.driverId;
   }
-  public get date(): Date {
+  public get date() {
     return this._props.date;
   }
-  public get fare(): number | null {
+  public get fare() {
     return this._props.fare;
   }
-  public get status(): string {
+  public get status() {
     return this._props.status;
   }
   public get from() {

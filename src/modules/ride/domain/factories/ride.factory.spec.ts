@@ -22,7 +22,9 @@ describe('RideFactory', () => {
     expect(ride.to.lng).toBe(toLng);
   });
 
-  it('should create a ride with status "requested"', () => {
+  it('should create a ride with status requested, no driver and date as now', () => {
+    jest.useFakeTimers().setSystemTime(new Date());
+
     // Arrange
     const passengerId = 'passengerId';
     const fromLat = 1;
@@ -35,5 +37,9 @@ describe('RideFactory', () => {
 
     // Assert
     expect(ride.status).toBe('requested');
+    expect(ride.driverId).toBeNull();
+    expect(ride.date).toEqual(new Date());
+
+    jest.useRealTimers();
   });
 });

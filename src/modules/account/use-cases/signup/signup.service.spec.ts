@@ -7,6 +7,11 @@ import { IAccountRepository } from '../../persistence/repositories/account-repos
 import { SignupInputDto } from './dtos/signup.dto';
 import { SignupUseCase } from './signup.service';
 
+const data = createMock<SignupInputDto>({
+  email: 'jhondoe@email.com',
+  cpf: '12345678909',
+});
+
 describe('Signup use case', () => {
   let sut: SignupUseCase;
   let mockRepository: jest.Mocked<IAccountRepository>;
@@ -23,7 +28,6 @@ describe('Signup use case', () => {
   it('should throw an error if the email is already in use', async() => {
     // Arrange
     const account = createMock<AccountDaoDto>();
-    const data = createMock<SignupInputDto>();
     mockDao.findByEmail.mockResolvedValue(account);
 
     // Act & Assert
@@ -37,10 +41,6 @@ describe('Signup use case', () => {
 
   it('should return the id of the created account', async() => {
     // Arrange
-    const data = createMock<SignupInputDto>({
-      email: 'jhondoe@email.com',
-      cpf: '12345678909',
-    });
     mockDao.findByEmail.mockResolvedValue(null);
 
     // Act

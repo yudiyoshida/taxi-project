@@ -31,6 +31,12 @@ export class Account {
     return this._props.isPassenger;
   }
 
+  public isDriverRole(): boolean {
+    // apesar de ser um método simples, ele é usado para um design flexível,
+    // uma vez que a regra de negócio sobre verificar se a conta é do tipo motorista pode mudar futuramente.
+    return this._props.isDriver && !!this._props.carPlate;
+  }
+
   public get id(): string {
     return this._props.id;
   }
