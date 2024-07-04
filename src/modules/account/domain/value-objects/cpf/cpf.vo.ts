@@ -5,17 +5,25 @@ const CPF_LENGTH = 11;
 export class CPF {
   private readonly _value: string;
 
-  constructor(cpf: string) {
+  public get value(): string {
+    return this._value;
+  }
+
+  constructor(rawCpf: string) {
+    const cpf = this.sanitize(rawCpf);
+
     if (!this.validate(cpf)) {
       throw new BadRequestException('CPF inválido');
     }
-    this._value = this.removePunctuation(cpf);
+    this._value = cpf;
+  }
+
+  private sanitize(cpf: string): string {
+    return cpf?.replace(/[\s./-]*/gim, '');
   }
 
   private validate(cpf: string): boolean {
     if (!cpf) return false;
-    cpf = this.removePunctuation(cpf);
-
     if (cpf.length !== CPF_LENGTH) return false;
     if (this.allDigitsAreEqual(cpf)) return false;
 
@@ -28,16 +36,12 @@ export class CPF {
     return true;
   }
 
-  private removePunctuation(cpf: string): string {
-    return cpf.replace(/[\s./-]*/gim, '');
-  }
-
   private allDigitsAreEqual(cpf: string): boolean {
     return cpf.split('').every((digit) => digit === cpf[0]);
   }
 
-  // https://www.macoratti.net/alg_cpf.htm
   private calculateDigit(cpf: string, length: number): number {
+    // https://www.macoratti.net/alg_cpf.htm
     let sum = 0;
     let rest = 0;
 
@@ -48,9 +52,5 @@ export class CPF {
     if (rest === 10 || rest === 11) rest = 0;
 
     return rest;
-  }
-
-  public get value(): string {
-    return this._value;
   }
 }

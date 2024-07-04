@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
-import { IRideDAO, RideDaoDto, RideWhereInput } from '../../ride-dao.interface';
+import { IRideDAO, RideDaoDto, RideDaoWhereInput } from '../../ride-dao.interface';
 
 const rideSelect = {
   id: true,
@@ -20,7 +20,7 @@ const rideSelect = {
 export class RidePrismaAdapterDAO implements IRideDAO {
   constructor(private prisma: PrismaService) {}
 
-  private whereBuilder(fields: RideWhereInput) {
+  private whereFactory(fields: RideDaoWhereInput) {
     const where: Prisma.RideWhereInput = {};
 
     if (fields.date) where.date = fields.date;
@@ -31,8 +31,8 @@ export class RidePrismaAdapterDAO implements IRideDAO {
     return where;
   }
 
-  public async findBy(fields: RideWhereInput): Promise<RideDaoDto[]> {
-    const where = this.whereBuilder(fields);
+  public async findBy(fields: RideDaoWhereInput): Promise<RideDaoDto[]> {
+    const where = this.whereFactory(fields);
 
     return this.prisma.ride.findMany({
       where,

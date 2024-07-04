@@ -3,6 +3,7 @@ import { TOKENS } from 'src/infra/ioc/token';
 import { IAccountRepository } from 'src/modules/account/persistence/repositories/account-repository.interface';
 import { SuccessMessage } from 'src/shared/dtos/success-message/success-message.dto';
 import { Errors } from 'src/shared/errors/error-message';
+import { RideStatus } from '../../domain/entities/ride.entity';
 import { IRideDAO } from '../../persistence/dao/ride-dao.interface';
 import { IRideRepository } from '../../persistence/repository/ride-repository.interface';
 
@@ -24,13 +25,13 @@ export class AcceptRideUseCase {
     // if (ride.status !== 'requested') {
     //   throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
     // }
-    if (ride.cannotBeAccepted()) {
+    if (!ride.canBeAccepted()) {
       throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
     }
 
     const driverActiveRides = await this.rideDao.findBy({
       driverId: account.id,
-      status: ['accepted', 'inProgress'],
+      status: [RideStatus.accepted, RideStatus.inProgress],
     });
     if (driverActiveRides.length > 0) {
       throw new UnprocessableEntityException(Errors.DRIVER_ALREADY_HAS_ACTIVE_RIDE);

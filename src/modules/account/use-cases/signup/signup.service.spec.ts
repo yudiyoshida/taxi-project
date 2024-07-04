@@ -12,7 +12,7 @@ const data = createMock<SignupInputDto>({
   cpf: '12345678909',
 });
 
-describe('Signup use case', () => {
+describe('SignupUseCase', () => {
   let sut: SignupUseCase;
   let mockRepository: jest.Mocked<IAccountRepository>;
   let mockDao: jest.Mocked<IAccountDAO>;

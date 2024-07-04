@@ -5,12 +5,12 @@ import { AccountPrismaAdapterRepository } from './repositories/adapters/prisma/a
 
 const providers: Provider[] = [
   {
-    provide: TOKENS.IAccountRepository,
-    useClass: AccountPrismaAdapterRepository,
-  },
-  {
     provide: TOKENS.IAccountDAO,
     useClass: AccountPrismaAdapterDAO,
+  },
+  {
+    provide: TOKENS.IAccountRepository,
+    useClass: AccountPrismaAdapterRepository,
   },
 ];
 

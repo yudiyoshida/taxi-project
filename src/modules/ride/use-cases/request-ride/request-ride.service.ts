@@ -2,6 +2,7 @@ import { ConflictException, Inject, Injectable, UnprocessableEntityException } f
 import { TOKENS } from 'src/infra/ioc/token';
 import { IAccountRepository } from 'src/modules/account/persistence/repositories/account-repository.interface';
 import { Errors } from 'src/shared/errors/error-message';
+import { RideStatus } from '../../domain/entities/ride.entity';
 import { RideFactory } from '../../domain/factories/ride.factory';
 import { IRideDAO } from '../../persistence/dao/ride-dao.interface';
 import { IRideRepository } from '../../persistence/repository/ride-repository.interface';
@@ -23,7 +24,7 @@ export class RequestRideUseCase {
 
     const passengerActiveRides = await this.rideDao.findBy({
       passengerId: account.id,
-      status: ['requested', 'accepted', 'inProgress'],
+      status: [RideStatus.requested, RideStatus.accepted, RideStatus.inProgress],
     });
     if (passengerActiveRides.length > 0) {
       throw new ConflictException(Errors.PASSENGER_ALREADY_HAS_ACTIVE_RIDE);

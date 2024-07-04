@@ -1,11 +1,11 @@
 import { Ride, RideStatus } from '../entities/ride.entity';
 
-export type RidePropsCreation = {
+export type RidePropsFactory = {
   passengerId: string;
   driverId: string | null;
   date: Date;
   fare: number | null;
-  status: RideStatus;
+  status: string;
   fromLat: number;
   fromLng: number;
   toLat: number;
@@ -22,12 +22,12 @@ export class RideFactory {
       toLng,
       driverId: null,
       fare: null,
-      status: 'requested',
+      status: RideStatus.requested,
       date: new Date(),
     });
   }
 
-  public static load(props: RidePropsCreation, id: string): Ride {
+  public static load(props: RidePropsFactory, id: string): Ride {
     return new Ride(props, id);
   }
 }

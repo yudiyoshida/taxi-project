@@ -1,14 +1,14 @@
-import { Ride } from '../entities/ride.entity';
+import { Ride, RideStatus } from '../entities/ride.entity';
 import { RideFactory } from './ride.factory';
 
-describe('RideFactory', () => {
+describe('Create static method', () => {
   it('should create a ride with the provided passengerId, fromLat, fromLng, toLat and toLng', () => {
     // Arrange
     const passengerId = 'passengerId';
-    const fromLat = 1;
-    const fromLng = 2;
-    const toLat = 3;
-    const toLng = 4;
+    const fromLat = 32.7885486;
+    const fromLng = 130.7330224;
+    const toLat = -23.5650274;
+    const toLng = -46.739807;
 
     // Act
     const ride = RideFactory.create(passengerId, fromLat, fromLng, toLat, toLng);
@@ -36,10 +36,14 @@ describe('RideFactory', () => {
     const ride = RideFactory.create(passengerId, fromLat, fromLng, toLat, toLng);
 
     // Assert
-    expect(ride.status).toBe('requested');
+    expect(ride.status).toBe(RideStatus.requested);
     expect(ride.driverId).toBeNull();
     expect(ride.date).toEqual(new Date());
 
     jest.useRealTimers();
   });
+});
+
+describe('Load static method', () => {
+  it.todo('implement');
 });

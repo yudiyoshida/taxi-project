@@ -2,7 +2,7 @@ import { Account } from '../entities/account.entity';
 import { AccountFactory } from './account.factory';
 
 describe('Create static method', () => {
-  it('should create a new instance of the entity', () => {
+  it('should create a new instance of the entity with correct props', () => {
     // Arrange
     const props = {
       isPassenger: true,
@@ -28,4 +28,8 @@ describe('Create static method', () => {
     expect(account.password).toBe('123456789');
     expect(account.carPlate).toBe(null);
   });
+});
+
+describe('Load static method', () => {
+  it.todo('implement');
 });

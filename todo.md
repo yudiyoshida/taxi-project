@@ -1,9 +1,8 @@
 # TODO
-- testes nos inputDtos.
-- testes na ride entity.
+- testes unitários na account entity.
+- testes unitários na account factory (método load).
+- testes unitários na ride entity.
+- testes unitários na ride factory (método load).
 
-# ANALISAR
-- outputDtos na DAO interface.
-- whereBuilder na DAO interface.
-- factory nas entidades.
-- getters nas entidades.
+- transformar ridestatus em vo?
+- testes nos inputDtos.
