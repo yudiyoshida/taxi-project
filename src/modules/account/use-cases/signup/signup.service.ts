@@ -1,5 +1,6 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
+import { Errors } from 'src/shared/errors/error-message';
 import { AccountFactory } from '../../domain/factories/account.factory';
 import { IAccountDAO } from '../../persistence/dao/account-dao.interface';
 import { IAccountRepository } from '../../persistence/repositories/account-repository.interface';
@@ -15,7 +16,7 @@ export class SignupUseCase {
   public async execute(data: SignupInputDto): Promise<SignupOutputDto> {
     const accountExists = await this.accountDao.findByEmail(data.email);
     if (accountExists) {
-      throw new ConflictException('O email informado já está sendo utilizado.');
+      throw new ConflictException(Errors.EMAIL_ALREADY_IN_USE);
     }
 
     const account = AccountFactory.create(data);

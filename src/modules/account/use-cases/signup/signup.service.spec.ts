@@ -2,6 +2,7 @@ import { TestBed } from '@automock/jest';
 import { createMock } from '@golevelup/ts-jest';
 import { ConflictException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
+import { Errors } from 'src/shared/errors/error-message';
 import { AccountDaoDto, IAccountDAO } from '../../persistence/dao/account-dao.interface';
 import { IAccountRepository } from '../../persistence/repositories/account-repository.interface';
 import { SignupInputDto } from './dtos/signup.dto';
@@ -34,7 +35,7 @@ describe('SignupUseCase', () => {
     expect.assertions(3);
     await sut.execute(data).catch((error) => {
       expect(error).toBeInstanceOf(ConflictException);
-      expect(error.message).toBe('O email informado já está sendo utilizado.');
+      expect(error.message).toBe(Errors.EMAIL_ALREADY_IN_USE);
       expect(mockRepository.save).not.toHaveBeenCalled();
     });
   });

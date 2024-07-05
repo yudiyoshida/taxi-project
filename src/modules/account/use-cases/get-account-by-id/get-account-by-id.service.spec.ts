@@ -2,6 +2,7 @@ import { TestBed } from '@automock/jest';
 import { createMock } from '@golevelup/ts-jest';
 import { NotFoundException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
+import { Errors } from 'src/shared/errors/error-message';
 import { AccountDaoDto } from '../../persistence/dao/account-dao.interface';
 import { AccountPrismaAdapterDAO } from '../../persistence/dao/adapters/prisma/account-prisma.dao';
 import { GetAccountByIdUseCase } from './get-account-by-id.service';
@@ -25,7 +26,7 @@ describe('GetAccountByIdUseCase', () => {
     // Act & Assert
     return sut.execute(id).catch((error) => {
       expect(error).toBeInstanceOf(NotFoundException);
-      expect(error.message).toBe('Conta não encontrada na base de dados.');
+      expect(error.message).toBe(Errors.ACCOUNT_NOT_FOUND);
     });
   });
 

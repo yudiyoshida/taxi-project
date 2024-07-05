@@ -4,6 +4,7 @@ import { UnprocessableEntityException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
 import { AccountFactory, AccountPropsFactory } from 'src/modules/account/domain/factories/account.factory';
 import { IAccountRepository } from 'src/modules/account/persistence/repositories/account-repository.interface';
+import { Errors } from 'src/shared/errors/error-message';
 import { RideStatus } from '../../domain/entities/ride.entity';
 import { RideFactory, RidePropsFactory } from '../../domain/factories/ride.factory';
 import { IRideDAO, RideDaoDto } from '../../persistence/dao/ride-dao.interface';
@@ -43,7 +44,7 @@ describe('AcceptRideUseCase', () => {
     expect.assertions(2);
     return sut.execute(rideId, accountId).catch((error) => {
       expect(error).toBeInstanceOf(UnprocessableEntityException);
-      expect(error.message).toBe('Somente motoristas podem aceitar corridas.');
+      expect(error.message).toBe(Errors.ACCOUNT_NOT_DRIVE_TYPE);
     });
   });
 
@@ -59,7 +60,7 @@ describe('AcceptRideUseCase', () => {
     expect.assertions(2);
     return sut.execute(rideId, accountId).catch((error) => {
       expect(error).toBeInstanceOf(UnprocessableEntityException);
-      expect(error.message).toBe('Erro. Motorista já possui uma corrida em andamento.');
+      expect(error.message).toBe(Errors.DRIVER_ALREADY_HAS_ACTIVE_RIDE);
     });
   });
 
@@ -79,7 +80,7 @@ describe('AcceptRideUseCase', () => {
     expect.assertions(2);
     return sut.execute(rideId, accountId).catch((error) => {
       expect(error).toBeInstanceOf(UnprocessableEntityException);
-      expect(error.message).toBe('Corrida não está no status requested.');
+      expect(error.message).toBe(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
     });
   });
 

@@ -2,6 +2,7 @@ import { TestBed } from '@automock/jest';
 import { createMock } from '@golevelup/ts-jest';
 import { NotFoundException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
+import { Errors } from 'src/shared/errors/error-message';
 import { IRideDAO, RideDaoDto } from '../../persistence/dao/ride-dao.interface';
 import { GetRideByIdUseCase } from './get-ride-by-id.service';
 
@@ -25,7 +26,7 @@ describe('GetRideByIdService', () => {
     expect.assertions(2);
     return sut.execute(id).catch((error) => {
       expect(error).toBeInstanceOf(NotFoundException);
-      expect(error.message).toBe('Corrida não encontrada na base de dados.');
+      expect(error.message).toBe(Errors.RIDE_NOT_FOUND);
     });
   });
 

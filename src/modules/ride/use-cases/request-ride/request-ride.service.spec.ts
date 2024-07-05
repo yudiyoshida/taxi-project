@@ -5,6 +5,7 @@ import { TOKENS } from 'src/infra/ioc/token';
 import { Account } from 'src/modules/account/domain/entities/account.entity';
 import { AccountFactory } from 'src/modules/account/domain/factories/account.factory';
 import { IAccountRepository } from 'src/modules/account/persistence/repositories/account-repository.interface';
+import { Errors } from 'src/shared/errors/error-message';
 import { IRideDAO, RideDaoDto } from '../../persistence/dao/ride-dao.interface';
 import { RequestRideInputDto } from './dtos/request-ride.dto';
 import { RequestRideUseCase } from './request-ride.service';
@@ -38,7 +39,7 @@ describe('RequestRideUseCase', () => {
     expect.assertions(2);
     return sut.execute(data).catch((error) => {
       expect(error).toBeInstanceOf(UnprocessableEntityException);
-      expect(error.message).toBe('Somente passageiros podem solicitar corridas.');
+      expect(error.message).toBe(Errors.ACCOUNT_NOT_PASSENGER_TYPE);
     });
   });
 
@@ -54,7 +55,7 @@ describe('RequestRideUseCase', () => {
     expect.assertions(2);
     return sut.execute(data).catch((error) => {
       expect(error).toBeInstanceOf(ConflictException);
-      expect(error.message).toBe('Erro. Passageiro já possui uma corrida em andamento.');
+      expect(error.message).toBe(Errors.PASSENGER_ALREADY_HAS_ACTIVE_RIDE);
     });
   });
 
