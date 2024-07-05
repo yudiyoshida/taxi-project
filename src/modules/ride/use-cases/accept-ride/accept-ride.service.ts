@@ -21,14 +21,7 @@ export class AcceptRideUseCase {
       throw new UnprocessableEntityException(Errors.ACCOUNT_NOT_DRIVE_TYPE);
     }
 
-    const ride = await this.rideRepository.findById(rideId);
-    // if (ride.status !== 'requested') {
-    //   throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
-    // }
-    if (!ride.canBeAccepted()) {
-      throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
-    }
-
+    // TODO: refactor to a domain service?
     const driverActiveRides = await this.rideDao.findBy({
       driverId: account.id,
       status: [RideStatus.accepted, RideStatus.inProgress],
@@ -37,7 +30,9 @@ export class AcceptRideUseCase {
       throw new UnprocessableEntityException(Errors.DRIVER_ALREADY_HAS_ACTIVE_RIDE);
     }
 
+    const ride = await this.rideRepository.findById(rideId);
     ride.accept(account.id);
+
     await this.rideRepository.edit(ride);
 
     return { message: `Corrida aceita pelo motorista ${account.name}.` };

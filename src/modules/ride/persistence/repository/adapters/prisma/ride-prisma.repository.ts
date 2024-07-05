@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
-import { Ride } from 'src/modules/ride/domain/entities/ride.entity';
+import { Ride, RideStatus } from 'src/modules/ride/domain/entities/ride.entity';
 import { RideFactory } from 'src/modules/ride/domain/factories/ride.factory';
 import { Errors } from 'src/shared/errors/error-message';
 import { IRideRepository } from '../../ride-repository.interface';
@@ -17,7 +17,8 @@ export class RidePrismaAdapterRepository implements IRideRepository {
     if (!ride) {
       throw new NotFoundException(Errors.RIDE_NOT_FOUND);
     }
-    return RideFactory.load(ride, ride.id);
+    const status = ride.status as RideStatus;
+    return RideFactory.load({ ...ride, status }, ride.id);
   }
 
   public async save(ride: Ride): Promise<void> {

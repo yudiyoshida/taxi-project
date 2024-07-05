@@ -2,10 +2,9 @@ import { TestBed } from '@automock/jest';
 import { createMock } from '@golevelup/ts-jest';
 import { UnprocessableEntityException } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
-import { Account } from 'src/modules/account/domain/entities/account.entity';
 import { AccountFactory, AccountPropsFactory } from 'src/modules/account/domain/factories/account.factory';
 import { IAccountRepository } from 'src/modules/account/persistence/repositories/account-repository.interface';
-import { Ride } from '../../domain/entities/ride.entity';
+import { RideStatus } from '../../domain/entities/ride.entity';
 import { RideFactory, RidePropsFactory } from '../../domain/factories/ride.factory';
 import { IRideDAO, RideDaoDto } from '../../persistence/dao/ride-dao.interface';
 import { IRideRepository } from '../../persistence/repository/ride-repository.interface';
@@ -48,43 +47,10 @@ describe('AcceptRideUseCase', () => {
     });
   });
 
-  it('should throw an error when driver does not have a carPlate', async() => {
-    // Arrange
-    const account = AccountFactory.load({ ...accountProps, carPlate: null }, accountId);
-    mockAccountRepository.findById.mockResolvedValue(account);
-
-    // Act & Assert
-    expect.assertions(2);
-    return sut.execute(rideId, accountId).catch((error) => {
-      expect(error).toBeInstanceOf(UnprocessableEntityException);
-      expect(error.message).toBe('Somente motoristas podem aceitar corridas.');
-    });
-  });
-
-  it('should throw an error when ride status is not requested', async() => {
-    // Arrange
-    const account = createMock<Account>({ isDriverRole: () => true });
-    mockAccountRepository.findById.mockResolvedValue(account);
-
-    const rideProps = createMock<RidePropsFactory>({ status: 'accepted' });
-    const ride = RideFactory.load(rideProps, rideId);
-    mockRideRepository.findById.mockResolvedValue(ride);
-
-    // Act & Assert
-    expect.assertions(2);
-    return sut.execute(rideId, accountId).catch((error) => {
-      expect(error).toBeInstanceOf(UnprocessableEntityException);
-      expect(error.message).toBe('Corrida não está no status requested.');
-    });
-  });
-
   it('should throw an error if driver has another accepted or in progress ride', async() => {
     // Arrange
-    const account = createMock<Account>({ isDriverRole: () => true });
+    const account = AccountFactory.load(accountProps, accountId);
     mockAccountRepository.findById.mockResolvedValue(account);
-
-    const ride = createMock<Ride>({ canBeAccepted: () => true });
-    mockRideRepository.findById.mockResolvedValue(ride);
 
     const driverInProgressRides = [createMock<RideDaoDto>()];
     mockRideDao.findBy.mockResolvedValue(driverInProgressRides);
@@ -97,16 +63,37 @@ describe('AcceptRideUseCase', () => {
     });
   });
 
-  it('should return a success message when ride is accepted', async() => {
+  it('should throw an error when ride status is not requested', async() => {
     // Arrange
-    const account = createMock<Account>({ isDriverRole: () => true, name: 'Jhon Doe' });
+    const account = AccountFactory.load(accountProps, accountId);
     mockAccountRepository.findById.mockResolvedValue(account);
-
-    const ride = createMock<Ride>({ canBeAccepted: () => true });
-    mockRideRepository.findById.mockResolvedValue(ride);
 
     const driverInProgressRides = [];
     mockRideDao.findBy.mockResolvedValue(driverInProgressRides);
+
+    const rideProps = createMock<RidePropsFactory>({ status: RideStatus.accepted });
+    const ride = RideFactory.load(rideProps, rideId);
+    mockRideRepository.findById.mockResolvedValue(ride);
+
+    // Act & Assert
+    expect.assertions(2);
+    return sut.execute(rideId, accountId).catch((error) => {
+      expect(error).toBeInstanceOf(UnprocessableEntityException);
+      expect(error.message).toBe('Corrida não está no status requested.');
+    });
+  });
+
+  it('should return a success message when ride is accepted', async() => {
+    // Arrange
+    const account = AccountFactory.load({ ...accountProps, name: 'Jhon Doe' }, accountId);
+    mockAccountRepository.findById.mockResolvedValue(account);
+
+    const driverInProgressRides = [];
+    mockRideDao.findBy.mockResolvedValue(driverInProgressRides);
+
+    const rideProps = createMock<RidePropsFactory>({ status: RideStatus.requested });
+    const ride = RideFactory.load(rideProps, rideId);
+    mockRideRepository.findById.mockResolvedValue(ride);
 
     // Act
     const result = await sut.execute(rideId, accountId);

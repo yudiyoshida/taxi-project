@@ -5,7 +5,7 @@ export type RidePropsFactory = {
   driverId: string | null;
   date: Date;
   fare: number | null;
-  status: string;
+  status: RideStatus;
   fromLat: number;
   fromLng: number;
   toLat: number;

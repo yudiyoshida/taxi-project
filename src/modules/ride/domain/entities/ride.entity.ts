@@ -1,4 +1,6 @@
+import { UnprocessableEntityException } from '@nestjs/common';
 import * as crypto from 'crypto';
+import { Errors } from 'src/shared/errors/error-message';
 import { RidePropsFactory } from '../factories/ride.factory';
 import { Coordinate } from '../value-objects/coordinate/coordinate.vo';
 
@@ -39,7 +41,7 @@ export class Ride {
     const to = new Coordinate(props.toLat, props.toLng);
 
     // TODO: transformar status em VO?
-    this._props = { ...props, id, from, to, status: props.status as RideStatus };
+    this._props = { ...props, id, from, to };
   }
 
   public canBeAccepted(): boolean {
@@ -47,6 +49,9 @@ export class Ride {
   }
 
   public accept(driverId: string): void {
+    if (this._props.status !== RideStatus.requested) {
+      throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
+    }
     this._props.driverId = driverId;
     this._props.status = RideStatus.accepted;
   }
