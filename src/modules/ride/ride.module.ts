@@ -7,6 +7,8 @@ import { GetRideByIdController } from './use-cases/get-ride-by-id/get-ride-by-id
 import { GetRideByIdUseCase } from './use-cases/get-ride-by-id/get-ride-by-id.service';
 import { RequestRideController } from './use-cases/request-ride/request-ride.controller';
 import { RequestRideUseCase } from './use-cases/request-ride/request-ride.service';
+import { StartRideController } from './use-cases/start-ride/start-ride.controller';
+import { StartRideUseCase } from './use-cases/start-ride/start-ride.service';
 
 @Module({
   imports: [
@@ -17,11 +19,13 @@ import { RequestRideUseCase } from './use-cases/request-ride/request-ride.servic
     RequestRideController,
     GetRideByIdController,
     AcceptRideController,
+    StartRideController,
   ],
   providers: [
     RequestRideUseCase,
     GetRideByIdUseCase,
     AcceptRideUseCase,
+    StartRideUseCase,
   ],
 })
 export class RideModule {}

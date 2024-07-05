@@ -44,15 +44,18 @@ export class Ride {
     this._props = { ...props, id, from, to };
   }
 
-  public canBeAccepted(): boolean {
-    return this._props.status === RideStatus.requested;
-  }
-
   public accept(driverId: string): void {
     if (this._props.status !== RideStatus.requested) {
       throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
     }
     this._props.driverId = driverId;
     this._props.status = RideStatus.accepted;
+  }
+
+  public start(): void {
+    if (this._props.status !== RideStatus.accepted) {
+      throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_ACCEPTED_STATUS);
+    }
+    this._props.status = RideStatus.inProgress;
   }
 }
