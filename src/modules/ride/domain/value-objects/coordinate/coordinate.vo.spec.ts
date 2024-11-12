@@ -37,6 +37,6 @@ describe('Coordinate Value Object', () => {
     const coordinateVo = new Coordinate(32.8770961, 130.8685864);
 
     expect(coordinateVo).toBeInstanceOf(Coordinate);
-    expect(coordinateVo.value).toEqual({ lat: 32.8770961, lng: 130.8685864 });
+    expect(coordinateVo).toMatchObject({ lat: 32.8770961, lng: 130.8685864 });
   });
 });

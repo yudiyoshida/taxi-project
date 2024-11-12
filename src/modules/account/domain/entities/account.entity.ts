@@ -11,6 +11,7 @@ type AccountProps = {
   cpf: CPF;
   email: Email;
   password: string;
+  // TODO: criar value object para placa do carro.
   carPlate: string | null;
 }
 

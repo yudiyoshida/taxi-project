@@ -84,6 +84,8 @@ describe('AcceptRideUseCase', () => {
     });
   });
 
+  it.todo('should throw an error when ride already has a driver');
+
   it('should return a success message when ride is accepted', async() => {
     // Arrange
     const account = AccountFactory.load({ ...accountProps, name: 'Jhon Doe' }, accountId);

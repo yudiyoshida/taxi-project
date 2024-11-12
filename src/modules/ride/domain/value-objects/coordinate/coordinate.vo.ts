@@ -1,13 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 
-type CoordinateValue = {
-  lat: number;
-  lng: number;
-};
-
 export class Coordinate {
   private _lat: number;
   private _lng: number;
+
+  public get lat() { return this._lat; }
+  public get lng() { return this._lng; }
 
   constructor(lat: number, lng: number) {
     this.lat = lat;
@@ -26,9 +24,5 @@ export class Coordinate {
       throw new BadRequestException('Longitude inválida');
     }
     this._lng = lng;
-  }
-
-  public get value(): CoordinateValue {
-    return { lat: this._lat, lng: this._lng };
   }
 }

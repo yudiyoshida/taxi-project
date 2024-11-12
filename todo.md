@@ -6,3 +6,5 @@
 
 - transformar ridestatus em vo?
 - testes nos inputDtos.
+
+- prisma multiple env files para testes de integração e e2e.

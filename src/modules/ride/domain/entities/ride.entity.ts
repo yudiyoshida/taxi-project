@@ -32,8 +32,8 @@ export class Ride {
   public get date() { return this._props.date; }
   public get fare() { return this._props.fare; }
   public get status() { return this._props.status; }
-  public get from() { return this._props.from.value; }
-  public get to() { return this._props.to.value; }
+  public get from() { return this._props.from; }
+  public get to() { return this._props.to; }
 
   constructor(props: RidePropsFactory, uuid?: string) {
     const id = uuid ?? crypto.randomUUID();
