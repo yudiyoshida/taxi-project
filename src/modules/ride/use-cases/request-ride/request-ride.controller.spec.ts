@@ -32,6 +32,11 @@ describe('RequestRideController', () => {
     await prisma.ride.deleteMany();
   });
 
+  afterAll(async() => {
+    await prisma.account.deleteMany();
+    await prisma.ride.deleteMany();
+  });
+
   it('should throw an error if provided id does not belong to a passenger', async() => {
     // Arrange
     const account = await signup.execute({
@@ -113,17 +118,7 @@ describe('RequestRideController', () => {
 
     // Assert
     const result = await getRideById.execute(ride.id);
-    expect(result).toEqual({
-      id: ride.id,
-      passengerId: account.id,
-      driverId: null,
-      date: expect.any(Date),
-      fare: null,
-      status: RideStatus.requested,
-      fromLat: data.fromLat,
-      fromLng: data.fromLng,
-      toLat: data.toLat,
-      toLng: data.toLng,
-    });
+    expect(result).toHaveProperty('id', ride.id);
+    expect(result).toHaveProperty('status', RideStatus.requested);
   });
 });

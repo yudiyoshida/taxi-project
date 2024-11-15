@@ -28,6 +28,10 @@ describe('GetAccountByIdController', () => {
     await prisma.account.deleteMany({});
   });
 
+  afterAll(async() => {
+    await prisma.account.deleteMany({});
+  });
+
   it('should throw an error if account is not found', async() => {
     // Act & Assert
     expect.assertions(1);

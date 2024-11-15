@@ -27,6 +27,10 @@ describe('SignupController', () => {
     await prisma.account.deleteMany({});
   });
 
+  afterAll(async() => {
+    await prisma.account.deleteMany({});
+  });
+
   it('should create a new account', async() => {
     // Arrange
     const body: SignupInputDto = {
