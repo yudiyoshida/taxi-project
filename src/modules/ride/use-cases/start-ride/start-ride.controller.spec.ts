@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { PrismaModule } from 'src/infra/database/prisma/prisma.module';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
+import { AccountModule } from 'src/modules/account/account.module';
 import { SignupUseCase } from 'src/modules/account/use-cases/signup/signup.service';
 import { RideStatus } from '../../domain/entities/ride.entity';
 import { RideModule } from '../../ride.module';
@@ -21,6 +22,7 @@ describe('StartRideController', () => {
     const module = await Test.createTestingModule({
       imports: [
         RideModule,
+        AccountModule,
         PrismaModule,
       ],
     }).compile();

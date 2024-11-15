@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AccountModule } from '../account/account.module';
+import { AccountPersistenceModule } from '../account/persistence/account-persistence.module';
 import { RidePersistenceModule } from './persistence/ride-persistence.module';
 import { AcceptRideController } from './use-cases/accept-ride/accept-ride.controller';
 import { AcceptRideUseCase } from './use-cases/accept-ride/accept-ride.service';
@@ -12,7 +12,7 @@ import { StartRideUseCase } from './use-cases/start-ride/start-ride.service';
 
 @Module({
   imports: [
-    AccountModule,
+    AccountPersistenceModule,
     RidePersistenceModule,
   ],
   controllers: [

@@ -17,8 +17,5 @@ import { SignupUseCase } from './use-cases/signup/signup.service';
     SignupUseCase,
     GetAccountByIdUseCase,
   ],
-  exports: [
-    AccountPersistenceModule,
-  ],
 })
 export class AccountModule {}
