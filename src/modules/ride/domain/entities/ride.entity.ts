@@ -68,6 +68,13 @@ export class Ride {
     this._props.status = RideStatus.inProgress;
   }
 
+  public finish(): void {
+    if (this._props.status !== RideStatus.inProgress) {
+      throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_IN_PROGRESS_STATUS);
+    }
+    this._props.status = RideStatus.finished;
+  }
+
   public isInProgress(): boolean {
     return this._props.status === RideStatus.inProgress;
   }

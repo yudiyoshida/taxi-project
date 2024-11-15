@@ -11,7 +11,8 @@ const Errors = {
   RIDE_NOT_IN_REQUESTED_STATUS: 'Corrida não está no status requested.',
   RIDE_NOT_IN_ACCEPTED_STATUS: 'Corrida não está no status accepted.',
   RIDE_ALREADY_HAS_DRIVER: 'Não é possível aceitar a corrida. Ela já possui um motorista.',
-  RIDE_NOT_IN_PROGRESS: 'Corrida não está em andamento.',
+  RIDE_NOT_IN_PROGRESS: 'Corrida não está no status inProgress.',
+  RIDE_NOT_IN_IN_PROGRESS_STATUS: 'Corrida não está no status inProgress.',
 
   POSITION_NOT_FOUND: 'Posição não encontrada na base de dados.',
 };

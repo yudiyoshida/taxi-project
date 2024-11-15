@@ -4,6 +4,8 @@ import { PositionPersistenceModule } from '../position/persistence/position-pers
 import { RidePersistenceModule } from './persistence/ride-persistence.module';
 import { AcceptRideController } from './use-cases/accept-ride/accept-ride.controller';
 import { AcceptRideUseCase } from './use-cases/accept-ride/accept-ride.service';
+import { FinishRideController } from './use-cases/finish-ride/finish-ride.controller';
+import { FinishRideUseCase } from './use-cases/finish-ride/finish-ride.service';
 import { GetRideByIdController } from './use-cases/get-ride-by-id/get-ride-by-id.controller';
 import { GetRideByIdUseCase } from './use-cases/get-ride-by-id/get-ride-by-id.service';
 import { RequestRideController } from './use-cases/request-ride/request-ride.controller';
@@ -23,6 +25,7 @@ import { UpdatePositionUseCase } from './use-cases/update-position/update-positi
     GetRideByIdController,
     AcceptRideController,
     StartRideController,
+    FinishRideController,
   ],
   providers: [
     RequestRideUseCase,
@@ -30,6 +33,7 @@ import { UpdatePositionUseCase } from './use-cases/update-position/update-positi
     AcceptRideUseCase,
     StartRideUseCase,
     UpdatePositionUseCase,
+    FinishRideUseCase,
   ],
 })
 export class RideModule {}

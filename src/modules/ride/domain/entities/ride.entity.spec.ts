@@ -60,4 +60,27 @@ describe('Ride Entity', () => {
       expect(ride.status).toBe(RideStatus.inProgress);
     });
   });
+
+  describe('finish method', () => {
+    it('should throw an error when ride status is not in progress', () => {
+      // Arrange
+      const propsMock = createMock<RidePropsFactory>({ status: RideStatus.cancelled });
+      const ride = new Ride(propsMock);
+
+      // Act & Assert
+      expect(() => ride.finish()).toThrow(Errors.RIDE_NOT_IN_IN_PROGRESS_STATUS);
+    });
+
+    it('should change ride status to finished', () => {
+      // Arrange
+      const propsMock = createMock<RidePropsFactory>({ status: RideStatus.inProgress });
+      const ride = new Ride(propsMock);
+
+      // Act
+      ride.finish();
+
+      // Assert
+      expect(ride.status).toBe(RideStatus.finished);
+    });
+  });
 });
