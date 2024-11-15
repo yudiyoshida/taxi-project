@@ -14,6 +14,7 @@ const rideSelect = {
   fromLng: true,
   toLat: true,
   toLng: true,
+  distance: true,
 } satisfies Prisma.RideSelect;
 
 @Injectable()

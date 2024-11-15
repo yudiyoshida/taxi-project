@@ -122,5 +122,6 @@ describe('RequestRideController', () => {
     const result = await getRideById.execute(ride.id);
     expect(result).toHaveProperty('id', ride.id);
     expect(result).toHaveProperty('status', RideStatus.requested);
+    expect(result).toHaveProperty('distance', 0);
   });
 });

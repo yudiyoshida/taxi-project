@@ -85,6 +85,7 @@ describe('GetRideByIdController', () => {
       fromLng: data.fromLng,
       toLat: data.toLat,
       toLng: data.toLng,
+      distance: 0,
     });
   });
 });

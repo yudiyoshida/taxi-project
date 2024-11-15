@@ -20,6 +20,7 @@ describe('Create static method', () => {
     expect(ride.from.lng).toBe(fromLng);
     expect(ride.to.lat).toBe(toLat);
     expect(ride.to.lng).toBe(toLng);
+    expect(ride.distance).toBe(0);
   });
 
   it('should create a ride with status requested, no driver and date as now', () => {
@@ -60,6 +61,7 @@ describe('Load static method', () => {
       fromLng: 2,
       toLat: 3,
       toLng: 4,
+      distance: Math.random() * 10,
     };
 
     // Act
@@ -77,6 +79,7 @@ describe('Load static method', () => {
     expect(ride.from.lng).toBe(data.fromLng);
     expect(ride.to.lat).toBe(data.toLat);
     expect(ride.to.lng).toBe(data.toLng);
+    expect(ride.distance).toBe(data.distance);
 
     jest.useRealTimers();
   });

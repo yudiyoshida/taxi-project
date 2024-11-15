@@ -34,6 +34,7 @@ export class RidePrismaAdapterRepository implements IRideRepository {
         status: ride.status,
         fare: ride.fare,
         date: ride.date,
+        distance: ride.distance,
       },
     });
   }
@@ -50,6 +51,7 @@ export class RidePrismaAdapterRepository implements IRideRepository {
         status: ride.status,
         fare: ride.fare,
         date: ride.date,
+        distance: ride.distance,
       },
     });
   }

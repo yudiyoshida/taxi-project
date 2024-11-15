@@ -10,6 +10,7 @@ export type RidePropsFactory = {
   fromLng: number;
   toLat: number;
   toLng: number;
+  distance: number;
 }
 
 export class RideFactory {
@@ -24,6 +25,7 @@ export class RideFactory {
       fare: null,
       status: RideStatus.requested,
       date: new Date(),
+      distance: 0,
     });
   }
 

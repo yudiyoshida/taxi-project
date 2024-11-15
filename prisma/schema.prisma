@@ -27,7 +27,7 @@ model Account {
 }
 
 model Ride {
-  id          String   @id
+  id          String     @id
   passengerId String
   driverId    String?
   date        DateTime
@@ -37,6 +37,19 @@ model Ride {
   fromLng     Float
   toLat       Float
   toLng       Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  distance    Float
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  positions   Position[]
+}
+
+model Position {
+  id        String   @id
+  rideId    String
+  ride      Ride     @relation(fields: [rideId], references: [id])
+  lat       Float
+  lng       Float
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

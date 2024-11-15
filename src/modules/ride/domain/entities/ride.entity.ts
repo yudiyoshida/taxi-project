@@ -1,6 +1,8 @@
 import { UnprocessableEntityException } from '@nestjs/common';
 import * as crypto from 'crypto';
+import { Position } from 'src/modules/position/domain/entities/position.entity';
 import { Errors } from 'src/shared/errors/error-message';
+import { DistanceCalculator } from '../domain-services/distance-calculator';
 import { RidePropsFactory } from '../factories/ride.factory';
 import { Coordinate } from '../value-objects/coordinate/coordinate.vo';
 
@@ -13,6 +15,7 @@ type RideProps = {
   status: RideStatus;
   from: Coordinate;
   to: Coordinate;
+  distance: number;
 }
 
 export enum RideStatus {
@@ -34,6 +37,7 @@ export class Ride {
   public get status() { return this._props.status; }
   public get from() { return this._props.from; }
   public get to() { return this._props.to; }
+  public get distance() { return this._props.distance; }
 
   constructor(props: RidePropsFactory, uuid?: string) {
     const id = uuid ?? crypto.randomUUID();
@@ -62,5 +66,14 @@ export class Ride {
       throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_ACCEPTED_STATUS);
     }
     this._props.status = RideStatus.inProgress;
+  }
+
+  public isInProgress(): boolean {
+    return this._props.status === RideStatus.inProgress;
+  }
+
+  public updateDistance(firstPosition: Position, secondPosition: Position): void {
+    const distance = DistanceCalculator.calculate(firstPosition, secondPosition);
+    this._props.distance += distance;
   }
 }

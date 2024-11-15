@@ -23,4 +23,5 @@ export type RideDaoDto = {
   toLng: number;
   passengerId: string;
   driverId: string | null;
+  distance: number;
 }

@@ -2,29 +2,21 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { StringToNumber } from 'src/shared/validators/custom-transformers/string-to-number';
 import { Trim } from 'src/shared/validators/custom-transformers/trim';
 
-export class RequestRideInputDto {
+export class UpdatePositionInputDto {
   @IsString({ message: '$property deve ser do tipo texto' })
   @IsNotEmpty({ message: '$property é um campo obrigatório' })
   @Trim()
-  passengerId: string;
+  rideId: string;
 
   @IsNumber({}, { message: '$property deve ser um número' })
   @StringToNumber()
-  fromLat: number;
+  lat: number;
 
   @IsNumber({}, { message: '$property deve ser um número' })
   @StringToNumber()
-  fromLng: number;
-
-  @IsNumber({}, { message: '$property deve ser um número' })
-  @StringToNumber()
-  toLat: number;
-
-  @IsNumber({}, { message: '$property deve ser um número' })
-  @StringToNumber()
-  toLng: number;
+  lng: number;
 }
 
-export class RequestRideOutputDto {
+export class UpdatePositionOutputDto {
   id: string;
 }
