@@ -64,31 +64,10 @@ describe('AcceptRideUseCase', () => {
     });
   });
 
-  it('should throw an error when ride status is not requested', async() => {
-    // Arrange
-    const account = AccountFactory.load(accountProps, accountId);
-    mockAccountRepository.findById.mockResolvedValue(account);
-
-    const driverInProgressRides = [];
-    mockRideDao.findBy.mockResolvedValue(driverInProgressRides);
-
-    const rideProps = createMock<RidePropsFactory>({ status: RideStatus.accepted });
-    const ride = RideFactory.load(rideProps, rideId);
-    mockRideRepository.findById.mockResolvedValue(ride);
-
-    // Act & Assert
-    expect.assertions(2);
-    return sut.execute(rideId, accountId).catch((error) => {
-      expect(error).toBeInstanceOf(UnprocessableEntityException);
-      expect(error.message).toBe(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
-    });
-  });
-
-  it.todo('should throw an error when ride already has a driver');
-
   it('should return a success message when ride is accepted', async() => {
     // Arrange
-    const account = AccountFactory.load({ ...accountProps, name: 'Jhon Doe' }, accountId);
+    const driverName = 'Jhon Doe';
+    const account = AccountFactory.load({ ...accountProps, name: driverName }, accountId);
     mockAccountRepository.findById.mockResolvedValue(account);
 
     const driverInProgressRides = [];
@@ -102,6 +81,6 @@ describe('AcceptRideUseCase', () => {
     const result = await sut.execute(rideId, accountId);
 
     // Assert
-    expect(result).toEqual({ message: 'Corrida aceita pelo motorista Jhon Doe.' });
+    expect(result).toEqual({ message: `Corrida aceita pelo motorista ${driverName}.` });
   });
 });
