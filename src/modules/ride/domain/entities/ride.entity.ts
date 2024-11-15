@@ -48,6 +48,11 @@ export class Ride {
     if (this._props.status !== RideStatus.requested) {
       throw new UnprocessableEntityException(Errors.RIDE_NOT_IN_REQUESTED_STATUS);
     }
+
+    if (this._props.driverId) {
+      throw new UnprocessableEntityException(Errors.RIDE_ALREADY_HAS_DRIVER);
+    }
+
     this._props.driverId = driverId;
     this._props.status = RideStatus.accepted;
   }
