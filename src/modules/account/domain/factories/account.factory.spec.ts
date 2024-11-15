@@ -8,7 +8,7 @@ describe('Create static method', () => {
       isPassenger: true,
       isDriver: false,
       name: 'John Doe',
-      cpf: '123.456.789-09',
+      cpf: '12345678909',
       email: 'jhondoe@email.com',
       password: '123456789',
       carPlate: null,
@@ -20,16 +20,42 @@ describe('Create static method', () => {
     // Assert
     expect(account).toBeInstanceOf(Account);
     expect(account.id).toBeDefined();
-    expect(account.isPassenger).toBe(true);
-    expect(account.isDriver).toBe(false);
-    expect(account.name).toBe('John Doe');
-    expect(account.cpf).toBe('12345678909');
-    expect(account.email).toBe('jhondoe@email.com');
-    expect(account.password).toBe('123456789');
-    expect(account.carPlate).toBe(null);
+    expect(account.isPassenger).toBe(props.isPassenger);
+    expect(account.isDriver).toBe(props.isDriver);
+    expect(account.name).toBe(props.name);
+    expect(account.cpf).toBe(props.cpf);
+    expect(account.email).toBe(props.email);
+    expect(account.password).toBe(props.password);
+    expect(account.carPlate).toBe(props.carPlate);
   });
 });
 
 describe('Load static method', () => {
-  it.todo('implement');
+  it('should load the account entity with correct props', () => {
+    // Arrange
+    const accountId = '123';
+    const props = {
+      isPassenger: true,
+      isDriver: false,
+      name: 'John Doe',
+      cpf: '12345678909',
+      email: 'jhondoe@email.com',
+      password: '123456789',
+      carPlate: null,
+    };
+
+    // Act
+    const account = AccountFactory.load(props, accountId);
+
+    // Assert
+    expect(account).toBeInstanceOf(Account);
+    expect(account.id).toBe(accountId);
+    expect(account.isPassenger).toBe(props.isPassenger);
+    expect(account.isDriver).toBe(props.isDriver);
+    expect(account.name).toBe(props.name);
+    expect(account.cpf).toBe(props.cpf);
+    expect(account.email).toBe(props.email);
+    expect(account.password).toBe(props.password);
+    expect(account.carPlate).toBe(props.carPlate);
+  });
 });
