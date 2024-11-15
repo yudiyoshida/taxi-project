@@ -37,4 +37,27 @@ describe('Ride Entity', () => {
       expect(ride.driverId).toBe(driverId);
     });
   });
+
+  describe('start method', () => {
+    it('should throw an error when ride status is not accepted', () => {
+      // Arrange
+      const propsMock = createMock<RidePropsFactory>({ status: RideStatus.cancelled });
+      const ride = new Ride(propsMock);
+
+      // Act & Assert
+      expect(() => ride.start()).toThrow(Errors.RIDE_NOT_IN_ACCEPTED_STATUS);
+    });
+
+    it('should change ride status to started', () => {
+      // Arrange
+      const propsMock = createMock<RidePropsFactory>({ status: RideStatus.accepted });
+      const ride = new Ride(propsMock);
+
+      // Act
+      ride.start();
+
+      // Assert
+      expect(ride.status).toBe(RideStatus.inProgress);
+    });
+  });
 });
