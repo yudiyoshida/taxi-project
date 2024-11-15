@@ -2,7 +2,6 @@ import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 import { StringToNumber } from 'src/shared/validators/custom-transformers/string-to-number';
 import { Trim } from 'src/shared/validators/custom-transformers/trim';
 
-// TODO: criar testes.
 export class RequestRideInputDto {
   @IsString({ message: '$property deve ser do tipo texto' })
   @IsNotEmpty({ message: '$property é um campo obrigatório' })

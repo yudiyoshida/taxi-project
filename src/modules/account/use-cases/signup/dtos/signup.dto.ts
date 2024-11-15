@@ -1,7 +1,6 @@
 import { IsBoolean, IsNotEmpty, IsString, MinLength, ValidateIf } from 'class-validator';
 import { Trim } from 'src/shared/validators/custom-transformers/trim';
 
-// TODO: criar testes.
 export class SignupInputDto {
   @IsBoolean({ message: '$property deve ser do tipo booleano' })
   isPassenger: boolean;
