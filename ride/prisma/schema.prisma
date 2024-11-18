@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Ride {
+  id          String     @id
+  passengerId String
+  driverId    String?
+  date        DateTime
+  fare        Float?
+  status      String
+  fromLat     Float
+  fromLng     Float
+  toLat       Float
+  toLng       Float
+  distance    Float
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  positions   Position[]
+}
+
+model Position {
+  id        String   @id
+  rideId    String
+  ride      Ride     @relation(fields: [rideId], references: [id])
+  lat       Float
+  lng       Float
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
