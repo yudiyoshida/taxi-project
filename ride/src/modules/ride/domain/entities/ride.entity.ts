@@ -81,6 +81,9 @@ export class Ride {
 
   public updateDistance(firstPosition: Position, secondPosition: Position): void {
     const distance = DistanceCalculator.calculate(firstPosition, secondPosition);
+    // const fare = distance * 1.5;
+
     this._props.distance += distance;
+    // this._props.fare += fare;
   }
 }

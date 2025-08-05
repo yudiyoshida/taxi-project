@@ -1,6 +1,7 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { TOKENS } from 'src/infra/ioc/token';
+import { RabbitMQModule } from 'src/infra/queue/rabbitmq.module';
 import { PositionPersistenceModule } from '../position/persistence/position-persistence.module';
 import { AccountAxiosAdapterGateway } from './gateway/account/adapters/axios/account-axios.gateway';
 import { RidePersistenceModule } from './persistence/ride-persistence.module';
@@ -21,6 +22,7 @@ import { UpdatePositionUseCase } from './use-cases/update-position/update-positi
     RidePersistenceModule,
     PositionPersistenceModule,
     HttpModule,
+    RabbitMQModule,
   ],
   controllers: [
     RequestRideController,

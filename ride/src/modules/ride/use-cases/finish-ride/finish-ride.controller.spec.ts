@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import { PrismaModule } from 'src/infra/database/prisma/prisma.module';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
 import { TOKENS } from 'src/infra/ioc/token';
+import { RabbitMQService } from 'src/infra/queue/rabbitmq.service';
 import { RideStatus } from '../../domain/entities/ride.entity';
 import { IAccountGateway } from '../../gateway/account/account-gateway.interface';
 import { RideModule } from '../../ride.module';
@@ -19,6 +20,7 @@ describe('FinishRideController', () => {
   let startRide: StartRideUseCase;
   let getRideById: GetRideByIdUseCase;
   let accountGateway: IAccountGateway;
+  let rabbitMqService: RabbitMQService;
 
   beforeEach(async() => {
     const module = await Test.createTestingModule({
@@ -35,12 +37,14 @@ describe('FinishRideController', () => {
     startRide = module.get<StartRideUseCase>(StartRideUseCase);
     getRideById = module.get<GetRideByIdUseCase>(GetRideByIdUseCase);
     accountGateway = module.get<IAccountGateway>(TOKENS.IAccountGateway);
+    rabbitMqService = module.get<RabbitMQService>(RabbitMQService);
 
     await prisma.ride.deleteMany();
   });
 
   afterAll(async() => {
     await prisma.ride.deleteMany();
+    await rabbitMqService.close();
   });
 
   it('should finish a ride', async() => {

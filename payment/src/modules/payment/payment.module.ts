@@ -3,5 +3,6 @@ import { ProcessPaymentUseCase } from './use-cases/process-payment/process-payme
 
 @Module({
   providers: [ProcessPaymentUseCase],
+  exports: [ProcessPaymentUseCase],
 })
 export class PaymentModule {}
